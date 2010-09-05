@@ -1,9 +1,4 @@
-﻿///////////////////////////////////////////////////////////////
-//                     MERTHIN PROJECT                       //
-//       Horacio Nuñez Hdez. (hnh at lab.matcom.uh.cu)       //
-//               WEBOO GROUP - MATCOM - UH                   //                    
-///////////////////////////////////////////////////////////////
-namespace Merthin.Extensions
+﻿namespace Merthin.Extensions
 open System.Drawing
 open System.Runtime.CompilerServices
 
