@@ -1,10 +1,4 @@
-﻿(*
- * Merthin Project         - (http://merthin.codeplex.com)
- * Horacio Núñez Hernández - (hnh12358 at gmail.com)
- * 23/06/2010
- *)
-
-namespace Merthin.FSharp
+﻿namespace Merthin.FSharp
 open System
 
 module String =
@@ -17,3 +11,4 @@ module String =
     let reverse (str : string) = str |> toStringArray |> Array.rev |> join String.Empty
     let isPalindrome (str : string) = seq {0 .. str.Length / 2} |> Seq.forall(fun x -> str.[x] = str.[str.Length - x - 1])
     let add (str : string) str2 = str2 + str
+    let removeFromEnd (str : string) count = str.Remove(str.Length - 1 - count)

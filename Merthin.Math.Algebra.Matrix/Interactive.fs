@@ -1,47 +1,55 @@
-﻿(*
- * Merthin Project         - (http://merthin.codeplex.com)
- * Horacio Núñez Hernández - (hnh12358 at gmail.com)
- * 23/06/2010
- *)
-
-namespace Merthin.Math.Algebra.Matrix
-open Merthin.FSharp
+﻿namespace Merthin.Math.Algebra.Matrix
 open System
+open System.Globalization
+open System.Runtime.CompilerServices
+open Merthin.FSharp
 
 module Interactive =
+    
+    let credits() =
+        "\nMerthin Interactive is a customization of the F# Interactive tool that load modules, data types and operators from " +
+        "the Merthin project allowing the user to work with those resources via so powerfull language and REPL console.\n" +
+        "\nThe Merthin project is written and maintened by:\n" +
+        "Horacio Nuñez (hnh12358@gmail.com)\n" +
+         "\nYour feedback is welcome!\n"
+        |> Console.WriteLine
 
     let (@|) (a: FMatrix) (b : FMatrix) = 
         a.ConcatVertical(b)
 
     let (@-) (a: FMatrix) (b : FMatrix) = 
         a.ConcatHorizontal(b)
-
-    let (~~) (a : FMatrix) = a.Transpose()
     
-    let ToConsoleStringF (m : FMatrix) maxRowDisplay maxColumnDisplay (format : string) (provider : IFormatProvider) =
-        let columnEnd = if maxColumnDisplay < m.ColumnCount then 
-                           " ...\n" 
-                        else 
-                           "\n"
-
-        let start, last = (fun next -> (fun pad -> next(pad))), (fun pad -> String.Empty)
-
-        let fold i (command,large) (current : float) = 
-            let newCommand = if (i + 1) % Math.Min(m.ColumnCount,maxColumnDisplay) = 0 then 
-                                (fun next -> 
-                                    (fun pad -> current.ToString(format,provider).PadLeft(pad) + columnEnd + next(pad)))
-                             else 
-                                (fun next -> 
-                                    (fun pad -> current.ToString(format,provider).PadLeft(pad) + next(pad)))
-            (fun next -> command(newCommand(next))), Math.Max(current.ToString(provider).Length,large)
-
-        let continuation, length =  Seq.foldi fold (start,0) m.[.. Math.Min(m.RowCount,maxRowDisplay),.. Math.Min(m.ColumnCount,maxColumnDisplay)].Items        
-        let result = "\n" + (continuation last (length + 1))
-        let result2 = result.Remove(result.Length - 1)
-        if maxRowDisplay < m.RowCount then 
-            result2 + (String.replicate 3 ((String.replicate maxColumnDisplay (".".ToString().PadLeft(length))) + "\n"))
-        else 
-            result2
+    let ToConsoleStringOptions (m : FMatrix,rowCount,columnCount,format : IFormatProvider,prefix,padChar : Char) =
+        let adaptData data maxValid = match data with
+                                      | Some(value) when value <= maxValid -> value 
+                                      | _ -> maxValid
         
-    let ToConsoleString (m : FMatrix) rowCount columnCount =
-        ToConsoleStringF m rowCount columnCount String.Empty null
+        let maxRowCount, maxColumnCount = adaptData rowCount m.RowCount, 
+                                          adaptData columnCount m.ColumnCount
+
+        let columnEnd = if maxColumnCount < m.ColumnCount then " .\n" else "\n"
+        let startCell, lastCell = (fun next -> (fun pad -> next(pad))), (fun pad -> String.Empty)
+        let stringFold i (command,large) (current : float) = 
+            let newCommand = 
+                if (i + 1) % Math.Min(m.ColumnCount,maxColumnCount) = 1  then
+                   (fun next -> (fun pad -> current.ToString(format).PadLeft(pad,padChar) + next(pad)))
+                elif (i + 1) % Math.Min(m.ColumnCount,maxColumnCount) = 0 then
+                   (fun next -> (fun pad -> " " + current.ToString(format).PadLeft(pad,padChar) + columnEnd + next(pad)))
+                else 
+                   (fun next -> (fun pad -> " " + current.ToString(format).PadLeft(pad,padChar) + next(pad)))
+            (fun next -> command(newCommand(next))), Math.Max(current.ToString(format).Length,large)
+
+        let items = m.[.. maxRowCount,.. maxColumnCount].Items        
+        let continuation, length =  Seq.foldi stringFold (startCell,0) items
+        
+        match maxRowCount,m.RowCount with
+        | _ when (maxRowCount < m.RowCount) && maxColumnCount < m.ColumnCount ->
+            prefix + (continuation lastCell (length)) + ".".PadLeft(length) + String.replicate (maxColumnCount - 1) (".".PadLeft(length + 1,' ')) + " ."
+        | _ when maxRowCount < m.RowCount -> 
+            prefix + (continuation lastCell (length)) + ".".PadLeft(length) + String.replicate (maxColumnCount - 1) (".".PadLeft(length + 1,' '))
+        | _ -> 
+            prefix + String.removeFromEnd (continuation lastCell (length)) 0
+        
+    let ToConsoleStringNullables (m : FMatrix,rowCount,columnCount,format,prefix, padChar) =
+        ToConsoleStringOptions(m,NullableToOption(rowCount),NullableToOption(columnCount),format,prefix,padChar)
