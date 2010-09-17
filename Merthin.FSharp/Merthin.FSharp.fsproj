@@ -50,6 +50,7 @@
     <Compile Include="String.fs" />
     <Compile Include="Compatibility.DelegateExtensions.fs" />
     <None Include="Compatibility.DelegateExtensions.CG.fsx" />
+    <Compile Include="FSharpCodes.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.PowerPack.Parallel.Seq, Version=1.9.9.9, Culture=neutral, PublicKeyToken=a19089b1c74d0809" />
