@@ -1,17 +1,15 @@
-﻿using System.Globalization;
+﻿using System;
 using System.Threading;
-using Merthin.Math.Algebra.Matrix;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+using NUnit.Framework;
 
-namespace Merthin.Math.Algebra.Matrix.Test
+namespace Merthin.Math.Algebra.Matrix.Tests
 {
     
     /// <summary>
-    ///This is a test class for InteractiveTest and is intended
-    ///to contain all InteractiveTest Unit Tests.
+    ///This is a test class for Interactive module and is intended
+    ///to contain all Interactive module Unit Tests.
     ///</summary>
-    [TestClass()]
+    [TestFixture]
     public class InteractiveTest
     {
         public IFormatProvider Format = Thread.CurrentThread.CurrentCulture;
@@ -21,7 +19,7 @@ namespace Merthin.Math.Algebra.Matrix.Test
         /// <summary>
         ///A test for ToConsoleString when the representation should reflect all the dimensions.
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void ToConsoleString_AllRowsAllColumns_Correct()
         {
             var matrixStr = "01 02 03 04 05 06\n" +
@@ -37,7 +35,7 @@ namespace Merthin.Math.Algebra.Matrix.Test
         /// <summary>
         ///A test for ToConsoleString when the representation reflects less rows than the dimension.
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void ToConsoleString_FewRowsAllColumns_Correct()
         {
             var matrixStr = "01 02 03 04 05 06\n" +
@@ -59,7 +57,7 @@ namespace Merthin.Math.Algebra.Matrix.Test
         /// <summary>
         ///A test for ToConsoleString when the representation reflects less columns than the dimension.
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void ToString_AllRowsFewColumns_Correct()
         {
             var matrixStr = "01 02 03 04 05 06\n" +
@@ -82,7 +80,7 @@ namespace Merthin.Math.Algebra.Matrix.Test
         /// <summary>
         ///A test for ToConsoleString when the representation reflects less rows and columns than the dimension.
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void ToString_FewRowsFewColumns_Correct()
         {
             var matrixStr = "01 02 03 04 05 06\n" +

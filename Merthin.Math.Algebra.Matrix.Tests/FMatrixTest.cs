@@ -1,17 +1,18 @@
 ﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
-namespace Merthin.Math.Algebra.Matrix.Test
+namespace Merthin.Math.Algebra.Matrix.Tests
 {
-    [TestClass]
+    /// <summary>
+    ///This is a test class for a FMatrix type and is intended
+    ///to contain all FMatrix type Unit Tests.
+    ///</summary>
+    [TestFixture]
     public class FMatrixTest
     {
         #region GetHashCode Tests
 
-        [TestMethod, Priority(1)]
+        [Test]
         public void GetHashCode_SameSizesAndValues_Equal()
         {
             var matrix1 = FMatrixModule.fromSeq(new[] { (new[] { 1.0, 2.0 }), (new[] { 1.0, 2.0 }) });
@@ -19,7 +20,7 @@ namespace Merthin.Math.Algebra.Matrix.Test
             Assert.AreEqual(matrix2.GetHashCode(), matrix1.GetHashCode());
         }
 
-        [TestMethod, Priority(1)]
+        [Test]
         public void GetFastHashCode_CompareSameSizesAndValuesWithDifferentePositions_Different()
         {
             var matrix1 = FMatrixModule.fromSeq(new[] { (new[] { 1.0, 2.0 }), (new[] { 1.0, 2.0 }) });
@@ -31,7 +32,7 @@ namespace Merthin.Math.Algebra.Matrix.Test
 
         #region GetFastHashCode Tests
 
-        [TestMethod,Priority(1)]
+        [Test]
         public void GetFastHashCode_SameSizesAndValues_Different()
         {
             var matrix1 = FMatrixModule.fromSeq(new[] { (new[] { 1.0, 2.0 }), (new[] { 1.0, 2.0 }) });
@@ -39,7 +40,7 @@ namespace Merthin.Math.Algebra.Matrix.Test
             Assert.AreNotEqual(matrix2.GetFastHashCode(), matrix1.GetFastHashCode());
         }
 
-        [TestMethod, Priority(1)]
+        [Test]
         public void GetHashCode_CompareSameSizesAndValuesWithDifferentePositions_Different()
         {
             var matrix1 = FMatrixModule.fromSeq(new[] { (new[] { 1.0, 2.0 }), (new[] { 1.0, 2.0 }) });
@@ -51,7 +52,7 @@ namespace Merthin.Math.Algebra.Matrix.Test
 
         #region ConcatHorizontal Tests
 
-        [TestMethod, Priority(1)]
+        [Test]
         public void ConcatHorizontal_Empty0x0Empty0x10_Empty0x10()
         {
             var empty0x0 = FMatrixModule.empty(0, 0);
@@ -62,7 +63,7 @@ namespace Merthin.Math.Algebra.Matrix.Test
             Assert.IsTrue(result2.IsFat && result2.Dimension.Item2 == 10);
         }
 
-        [TestMethod, Priority(1)]
+        [Test]
         public void ConcatHorizontal_Empty2x0Hankel2x5_Hankel2x5()
         {
             /* 1 2 3 4 5
@@ -75,7 +76,7 @@ namespace Merthin.Math.Algebra.Matrix.Test
             Assert.AreEqual(hankel2x5,result2);
         }
 
-        [TestMethod, Priority(1)]
+        [Test]
         public void ConcatHorizontal_Hankel2x5Hankel2x5_2x10()
         {
             /* 1 2 3 4 5
@@ -88,7 +89,7 @@ namespace Merthin.Math.Algebra.Matrix.Test
             Assert.AreEqual(hankel2x5, result3);
         }
 
-        [TestMethod,Priority(1),ExpectedException(typeof(Exception))]
+        [Test,ExpectedException(typeof(Exception))]
         public void ConcatHorizontal_Empty0x0Hankel2x5_Exception()
         {
             /* 1 2 3 4 5
@@ -99,7 +100,7 @@ namespace Merthin.Math.Algebra.Matrix.Test
             Assert.AreEqual(hankel2x5, result2);
         }
 
-        [TestMethod, Priority(1), ExpectedException(typeof(Exception))]
+        [Test, ExpectedException(typeof(Exception))]
         public void ConcatHorizontal_Hankel2x5Empty0x0_Exception()
         {
             /* 1 2 3 4 5
@@ -113,7 +114,7 @@ namespace Merthin.Math.Algebra.Matrix.Test
 
         #region ConcatVertical Tests
 
-        [TestMethod, Priority(1)]
+        [Test]
         public void ConcatVertical_Empty0x0Empty10x0_Empty10x0()
         {
             var empty0x0 = FMatrixModule.empty(0, 0);
@@ -124,7 +125,7 @@ namespace Merthin.Math.Algebra.Matrix.Test
             Assert.IsTrue(result2.IsTall && result2.Dimension.Item1 == 10);
         }
 
-        [TestMethod, Priority(1)]
+        [Test]
         public void ConcatVertical_Empty0x5Hankel2x5_Hankel2x5()
         {
             /* 1 2 3 4 5
@@ -137,7 +138,7 @@ namespace Merthin.Math.Algebra.Matrix.Test
             Assert.AreEqual(hankel2x5, result2);
         }
 
-        [TestMethod, Priority(1)]
+        [Test]
         public void ConcatVertical_Hankel2x5Hankel2x5_4x5()
         {
             /* 1 2 3 4 5
@@ -152,7 +153,7 @@ namespace Merthin.Math.Algebra.Matrix.Test
             Assert.AreEqual(hankel2x5, result3);
         }
 
-        [TestMethod, Priority(1), ExpectedException(typeof(Exception))]
+        [Test, ExpectedException(typeof(Exception))]
         public void ConcatVertical_Empty0x0Hankel2x5_Exception()
         {
             /* 1 2 3 4 5
@@ -162,7 +163,7 @@ namespace Merthin.Math.Algebra.Matrix.Test
             empty.ConcatVertical(hankel2x5);
         }
 
-        [TestMethod, Priority(1), ExpectedException(typeof(Exception))]
+        [Test, ExpectedException(typeof(Exception))]
         public void ConcatVertical_Hankel2x5Empty0x0_Exception()
         {
             /* 1 2 3 4 5

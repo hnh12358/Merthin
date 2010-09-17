@@ -1,18 +1,20 @@
 ﻿using System;
-using System.Text;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Merthin.Math.Algebra.Matrix;
+using NUnit.Framework;
 
-namespace Merthin.Math.Algebra.Matrix.Test
+namespace Merthin.Math.Algebra.Matrix.Tests
 {
-    [TestClass]
+    /// <summary>
+    ///This is a test class for FMatrix module and is intended
+    ///to contain all FMatrix module Unit Tests.
+    ///</summary>
+    [TestFixture]
     public class FMatrixModuleTest
     {
         #region Minor Tests
 
-        [TestMethod,Priority(2)]
+        [Test]
         public void Minor_MiddleMiddle_Correct()
         {            
             /* 1 2 3 4 5
@@ -26,7 +28,7 @@ namespace Merthin.Math.Algebra.Matrix.Test
             Assert.AreEqual(result1, expected1);
         }
 
-        [TestMethod, Priority(2)]
+        [Test]
         public void Minor_UpperLeft_Correct()
         {
             /* 1 2 3 4 5
@@ -40,7 +42,7 @@ namespace Merthin.Math.Algebra.Matrix.Test
             Assert.AreEqual(result1, expected1);
         }
 
-        [TestMethod, Priority(2)]
+        [Test]
         public void Minor_UpperRight_Correct()
         {
             /* 1 2 3 4 5
@@ -54,7 +56,7 @@ namespace Merthin.Math.Algebra.Matrix.Test
             Assert.AreEqual(result1, expected1);
         }
 
-        [TestMethod, Priority(2)]
+        [Test]
         public void Minor_BottomLeft_Correct()
         {
             /* 1 2 3 4 5
@@ -68,7 +70,7 @@ namespace Merthin.Math.Algebra.Matrix.Test
             Assert.AreEqual(result1, expected1);
         }
 
-        [TestMethod, Priority(2)]
+        [Test]
         public void Minor_BottomRight_Correct()
         {
             /* 1 2 3 4 5
@@ -86,7 +88,7 @@ namespace Merthin.Math.Algebra.Matrix.Test
 
         #region SubMatrix Tests
 
-        [TestMethod, Priority(2)]
+        [Test]
         public void SubMatrix_NoIndexes_Correct()
         {
             var source1 = FMatrixModule.hankelOfN(5, 5);
@@ -94,7 +96,7 @@ namespace Merthin.Math.Algebra.Matrix.Test
             Assert.AreEqual(result1, source1);
         }
 
-        [TestMethod, Priority(2)]
+        [Test]
         public void SubMatrix_ThirdBlock_Correct()
         {
             var source1 = FMatrixModule.hankelOfN(5, 5);
@@ -107,7 +109,7 @@ namespace Merthin.Math.Algebra.Matrix.Test
 
         #region SubMatrixOrEmpty Tests
 
-        [TestMethod,Priority(2)]        
+        [Test]        
         public void SubMatrixOrEmpty_UpperLeftCorner_Empty0x0()
         {
 
@@ -122,7 +124,7 @@ namespace Merthin.Math.Algebra.Matrix.Test
             Assert.IsTrue(result1.IsEmpty);
         }
 
-        [TestMethod, Priority(2)]        
+        [Test]        
         public void SubMatrixOrEmpty_UpperRightCorner_Empty0x0()
         {
 
@@ -137,7 +139,7 @@ namespace Merthin.Math.Algebra.Matrix.Test
             Assert.IsTrue(result1.IsEmpty);
         }
 
-        [TestMethod, Priority(2)]        
+        [Test]        
         public void SubMatrixOrEmpty_BottomLeftCorner_Empty0x0()
         {
 
@@ -152,7 +154,7 @@ namespace Merthin.Math.Algebra.Matrix.Test
             Assert.IsTrue(result1.IsEmpty);
         }
 
-        [TestMethod, Priority(2)]        
+        [Test]        
         public void SubMatrixOrEmpty_BottomRightCorner_Empty0x0()
         {
 
@@ -169,52 +171,52 @@ namespace Merthin.Math.Algebra.Matrix.Test
 
         #endregion
 
-        //#region Determinant Tests
+        #region Determinant Tests
 
-        //[TestMethod, Priority(2)]
-        //public void Determinant_Identity10_1()
-        //{
+        [Test,MaxTime(1000)]
+        public void Determinant_Identity10_1()
+        {
 
-        //    var source1 = FMatrixModule.identity(10);
-        //    var result1 = FMatrixModule.determinant(source1);
+            var source1 = FMatrixModule.identity(10);
+            var result1 = FMatrixModule.determinant(source1);
 
-        //    Assert.AreEqual(1, result1);
-        //}
+            Assert.AreEqual(1, result1);
+        }
 
-        //[TestMethod, Priority(2)]
-        //public void Determinant_Identity3_1()
-        //{
+        [Test, MaxTime(1000)]
+        public void Determinant_Identity3_1()
+        {
 
-        //    var source1 = FMatrixModule.identity(3);
-        //    var result1 = FMatrixModule.determinant(source1);
+            var source1 = FMatrixModule.identity(3);
+            var result1 = FMatrixModule.determinant(source1);
 
-        //    Assert.AreEqual(1, result1);
-        //}
+            Assert.AreEqual(1, result1);
+        }
 
-        //[TestMethod, Priority(2)]
-        //public void Determinant_Identity4_1()
-        //{
+        [Test, MaxTime(1000)]
+        public void Determinant_Identity4_1()
+        {
 
-        //    var source1 = FMatrixModule.identity(4);
-        //    var result1 = FMatrixModule.determinant(source1);
+            var source1 = FMatrixModule.identity(4);
+            var result1 = FMatrixModule.determinant(source1);
 
-        //    Assert.AreEqual(1, result1);
-        //}
+            Assert.AreEqual(1, result1);
+        }
 
-        //[TestMethod, Priority(2)]
-        //public void Determinant_Identity20_1()
-        //{
+        [Test, MaxTime(1000)]
+        public void Determinant_Identity20_1()
+        {
 
-        //    var source1 = FMatrixModule.identity(50);
-        //    var result1 = FMatrixModule.determinant(source1);
-        //    Assert.AreEqual(result1, 1);
-        //}
+            var source1 = FMatrixModule.identity(50);
+            var result1 = FMatrixModule.determinant(source1);
+            Assert.AreEqual(result1, 1);
+        }
 
-        //#endregion
+        #endregion
 
         #region FromSeq Tests
 
-        [TestMethod, Priority(2)]
+        [Test]
         public void FromSeq_NaturalIncreasingOffset10x10_Hankel10x10()
         {
             
@@ -224,7 +226,7 @@ namespace Merthin.Math.Algebra.Matrix.Test
             Assert.AreEqual(expected, result);
         }
 
-        [TestMethod, Priority(2)]
+        [Test]
         public void FromSeq_EmptySequence_Empty0x0()
         {
 
