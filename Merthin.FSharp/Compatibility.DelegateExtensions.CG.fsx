@@ -4,7 +4,7 @@ open System.IO
 if fsi.CommandLineArgs.Length > 0 then
    System.Environment.CurrentDirectory <- Path.GetDirectoryName(fsi.CommandLineArgs.[0])
 
-let mutable out =  "(*\n"
+let mutable out =  "\n"
                   + "* Merthin Project         - (http://merthin.codeplex.com)\n"
                   + "* Horacio Núñez Hernández - (hnh12358 at gmail.com)\n"
                   + "* 23/06/2010\n"

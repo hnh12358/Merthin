@@ -1,10 +1,4 @@
-﻿(*
- * Merthin Project         - (http://merthin.codeplex.com)
- * Horacio Núñez Hernández - (hnh12358 at gmail.com)
- * 23/06/2010
- *)
-
-namespace Merthin.FSharp
+﻿namespace Merthin.FSharp
 open Merthin.FSharp.DesignPatterns
 
 [<AllowNullLiteral>]
