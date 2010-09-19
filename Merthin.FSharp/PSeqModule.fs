@@ -1,12 +1,7 @@
-﻿(*
- * Merthin Project         - (http://merthin.codeplex.com)
- * Horacio Núñez Hernández - (hnh at lab.matcom.uh.cu)
- * 23/06/2010
- *)
-
-namespace Merthin.FSharp
+﻿namespace Merthin.FSharp
 open Microsoft.FSharp.Collections
 
+[<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 module PSeq =
 
     let public foldc fold first source  =

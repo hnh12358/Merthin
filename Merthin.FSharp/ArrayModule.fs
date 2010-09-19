@@ -1,11 +1,6 @@
-﻿(*
- * Merthin Project         - (http://merthin.codeplex.com)
- * Horacio Núñez Hernández - (hnh12358 at gmail.com)
- * 23/06/2010
- *)
+﻿namespace Merthin.FSharp
 
-namespace Merthin.FSharp
-
+[<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 module Array =
 
     let public foldc folder state array  =

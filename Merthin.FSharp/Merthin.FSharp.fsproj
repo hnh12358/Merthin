@@ -40,14 +40,14 @@
   <ItemGroup>
     <Compile Include="DesignPatterns.Singleton.fs" />
     <Compile Include="MerthinApplication.fs" />
-    <Compile Include="Utils.fs" />
-    <Compile Include="Array.fs" />
-    <Compile Include="List.fs" />
-    <Compile Include="Seq.fs" />
-    <Compile Include="PSeq.fs" />
+    <Compile Include="UtilsModule.fs" />
+    <Compile Include="ArrayModule.fs" />
+    <Compile Include="ListModule.fs" />
+    <Compile Include="SeqModule.fs" />
+    <Compile Include="PSeqModule.fs" />
     <Compile Include="Operators.fs" />
     <Compile Include="Applications.fs" />
-    <Compile Include="String.fs" />
+    <Compile Include="StringModule.fs" />
     <Compile Include="Compatibility.DelegateExtensions.fs" />
     <None Include="Compatibility.DelegateExtensions.CG.fsx" />
     <Compile Include="FSharpCodes.fs" />

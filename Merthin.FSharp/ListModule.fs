@@ -1,11 +1,6 @@
-﻿(*
- * Merthin Project         - (http://merthin.codeplex.com)
- * Horacio Núñez Hernández - (hnh12358 at gmail.com)
- * 23/06/2010
- *)
+﻿namespace Merthin.FSharp
 
-namespace Merthin.FSharp
-
+[<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 module List =
     
     let tupleRange first last =
@@ -56,8 +51,7 @@ module List =
             | head::tail -> gen1 tail lst2 (accu @ (gen0 head lst2 []))
         gen1 lst1 lst2 []
 
-        
-    (*
+(*
     let rec public unzip lst =
         match lst with
         | [] -> []
@@ -78,4 +72,4 @@ module List =
             | head::tail -> let ha,hb,hc = head
                             tupleListToLists3 tail (a @ [ha],b @ [hb],c @ [hc])
         tupleListToLists3 lst ([],[],[])
-    *)
+*)
