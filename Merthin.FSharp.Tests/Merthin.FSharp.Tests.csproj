@@ -46,6 +46,12 @@
     <Compile Include="FSharpCodesTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Merthin.FSharp\Merthin.FSharp.fsproj">
+      <Project>{9A8D60C0-722A-4556-A777-E31DDD53FDA8}</Project>
+      <Name>Merthin.FSharp</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
