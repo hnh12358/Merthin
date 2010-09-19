@@ -1,10 +1,4 @@
-﻿(*
- * Merthin Project         - (http://merthin.codeplex.com)
- * Horacio Núñez Hernández - (hnh12358 at gmail.com)
- * 23/06/2010
- *)
-
-namespace Merthin.Math.Algebra.Matrix
+﻿namespace Merthin.Math.Algebra.Matrix
 open System
 open System.IO
 open Microsoft.FSharp.Collections
@@ -237,8 +231,6 @@ module FMatrix =
         let approx, detail = wave order m (empty 1 0)
         approx, detail
 
-
-
     let minor (i,j) (m : FMatrix) =
         requires (m.AreValidIndexes(i,j)) MATRIX_MINOREXTRACTION_BADINDEXES
         let getPaddedSlice (rowStart,rowEnd,columnStart,columnEnd) =
@@ -249,12 +241,13 @@ module FMatrix =
                 | None, Some(b2) -> b2
                 | None,None -> count                               
             let slice = m.GetSlice(rowStart,rowEnd,columnStart,columnEnd,true)
-            if not (slice.IsEmpty) then
-               slice
-            else
+            if slice.IsEmpty then
                let rowCount = delta (rowStart,rowEnd) m.RowCount
                let columnCount = delta (columnStart,columnEnd) m.ColumnCount
                empty rowCount columnCount
+            else
+               slice
+               
         let b1 = getPaddedSlice(None,Some(i-1),None,Some(j - 1))
         let b2 = getPaddedSlice(None,Some(i-1),Some(j + 1),None)
         let b3 = getPaddedSlice(Some(i+1),None,None,Some(j - 1))
@@ -262,9 +255,9 @@ module FMatrix =
         b1.ConcatHorizontal(b2).ConcatVertical(b3.ConcatHorizontal(b4))
 
     let determinant (m : FMatrix) =
-        (*TODO: This is the determinant via Minors, it is too much belated and must be replaced
-                with a method using PSeq and n-permutation generator. *)
-        //requires (m.IsSquare) MATRIX_DETERMINANT_NOTSQUARE
+        //TODO: This is the determinant via Minors, it is too much belated and must be replaced
+        //       with a method using PSeq and n-permutation generator usin PLINQ.
+        requires (m.IsSquare) MATRIX_DETERMINANT_NOTSQUARE
         let sign (i,j) = if (((i + j) % 2) = 0) then 1.0 else -1.0
         let rec det n (a : FMatrix) =
             match n with

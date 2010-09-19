@@ -1,10 +1,4 @@
-﻿(*
- * Merthin Project         - (http://merthin.codeplex.com)
- * Horacio Núñez Hernández - (hnh12358 at gmail.com)
- * 23/06/2010
- *)
-
-namespace Merthin.Math.Algebra.Matrix
+﻿namespace Merthin.Math.Algebra.Matrix
 
 [<AutoOpen>]
 module internal StringsResources =

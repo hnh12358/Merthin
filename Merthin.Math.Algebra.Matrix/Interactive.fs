@@ -5,14 +5,6 @@ open System.Runtime.CompilerServices
 open Merthin.FSharp
 
 module Interactive =
-    
-    let credits() =
-        "\nMerthin Interactive is a customization of the F# Interactive tool that load modules, data types and operators from " +
-        "the Merthin project allowing the user to work with those resources via so powerfull language and REPL console.\n" +
-        "\nThe Merthin project is written and maintened by:\n" +
-        "Horacio Nuñez (hnh12358@gmail.com)\n" +
-         "\nYour feedback is welcome!\n"
-        |> Console.WriteLine
 
     let (@|) (a: FMatrix) (b : FMatrix) = 
         a.ConcatVertical(b)
