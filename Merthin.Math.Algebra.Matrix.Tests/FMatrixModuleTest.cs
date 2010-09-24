@@ -244,5 +244,41 @@ namespace Merthin.Math.Algebra.Matrix.Tests
         }
 
         #endregion
+
+        #region Strassen Product
+
+        [Test]
+        public void StrassenProduct_Size10_Correct()
+        {
+            var A = FMatrixModule.hankelOfN(10, 10);
+            var B = FMatrixModule.hankelOfNWithOffset(50, 10, 10);
+            var actual = FMatrixModule.StrassenProduct(A, B);
+            var expected = A * B;
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void StrassenProduct_Size16_Correct()
+        {
+            var A = FMatrixModule.hankelOfN(16, 16);
+            var B = FMatrixModule.hankelOfNWithOffset(50, 16, 16);
+            var actual = FMatrixModule.StrassenProduct(A, B);
+            var expected = A * B;
+            Assert.AreEqual(expected, actual);
+        }
+
+
+        [Test]
+        public void StrassenProduct_Size32_Correct()
+        {
+            var A = FMatrixModule.hankelOfN(32, 32);
+            var B = FMatrixModule.hankelOfNWithOffset(50, 32, 32);
+            var actual = Interactive.ToConsoleStringNullables(FMatrixModule.StrassenProduct(A, B),32,32,null,"",'0');
+            var expected = Interactive.ToConsoleStringNullables(A * B,32,32,null,"",'0');
+            Assert.AreEqual(expected, actual);
+        }
+
+        #endregion
+
     }
 }
