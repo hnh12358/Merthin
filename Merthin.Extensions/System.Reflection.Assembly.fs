@@ -5,11 +5,11 @@ open System.Runtime.CompilerServices
 
 [<Extension>]
 [<AutoOpen>]
-module SystemType =
+module SystemReflectionAssembly =
 
     [<Extension>]
-    let GetAllSubTypes(source : Type) =
+    let GetAllTypes(source : Type) =
         source
 
     type System.Type with
-        member this.GetAllSubTypes() = GetAllSubTypes(this) 
+        member this.GetAllTypes() = GetAllSubTypes(this) 
