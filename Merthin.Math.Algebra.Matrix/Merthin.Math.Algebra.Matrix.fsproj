@@ -37,7 +37,6 @@
     <Compile Include="StringsResources.fs" />
     <Compile Include="FMatrix.fs" />
     <Compile Include="FMatrixModule.fs" />
-    <Compile Include="Interactive.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.PowerPack.Parallel.Seq, Version=1.9.9.9, Culture=neutral, PublicKeyToken=a19089b1c74d0809" />
@@ -46,6 +45,8 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Merthin.FSharp\Merthin.FSharp.fsproj">
       <Name>Merthin.FSharp</Name>
       <Project>{9a8d60c0-722a-4556-a777-e31ddd53fda8}</Project>

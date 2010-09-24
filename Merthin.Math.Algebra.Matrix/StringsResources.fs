@@ -19,6 +19,7 @@ module internal StringsResources =
     let MATRIX_MAPSLICE_BADDIMENSION = "The given dimensions for submatriz are not valid."
     let MATRIX_DIVISION_ZERO = "The division by zero is not valid."
     let MATRIX_DETERMINANT_NOTSQUARE = "The matrix must be square."
+    let FMATRIX_STRASSENPRODUCT_NOTSQUARE = "The matrix must be of size nxn where n is a power of 2."
     let MATRIX_CREATION_NULLDELEGATE = "The gen parameter can't be null."
     let MATRIX_EMPTYCREATION_BADDIMENSIONS = "One or both dimensions must be zero."
     let MATRIX_CUSTOMCREATION_BADDIMENSIONS = "The row and columns count must be positive."

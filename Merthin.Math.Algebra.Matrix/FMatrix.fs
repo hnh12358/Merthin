@@ -219,7 +219,7 @@ type FMatrix(rows,columns,gen) =
               let newGen = fun (i,j) -> a.[i,j] - b.[i,j]
               new FMatrix(a.RowCount,a.ColumnCount, newGen)
 
-    static member public (*) (a : FMatrix,b : FMatrix) =
+    static member public ( * ) (a : FMatrix,b : FMatrix) =
            requires (a.ColumnCount = b.RowCount) MATRIX_MULTIPLICATION_MISMATCH
            let newGen = if (a.IsEmpty && b.IsEmpty) then
                            fun (i,j) -> 0.0
@@ -230,20 +230,20 @@ type FMatrix(rows,columns,gen) =
                                          |> Seq.fold (fun accu c -> accu + a.[i,c] * b.[j,c]) 0.0
            new FMatrix(a.RowCount,b.ColumnCount,newGen)
 
-    static member public (*) (scalar,a : FMatrix) =
+    static member public ( * ) (scalar,a : FMatrix) =
            if a.IsEmpty then
               a
            else
               let newGen = fun (i,j) -> a.[i,j] * scalar
               new FMatrix(a.RowCount,a.ColumnCount, newGen)
 
-    static member public (*) (a : FMatrix,scalar : Double) = 
+    static member public ( * ) (a : FMatrix,scalar : Double) = 
            scalar * a
 
-    static member public (*) (scalar,a : FMatrix) = 
+    static member public ( * ) (scalar,a : FMatrix) = 
            float(scalar) * a    
 
-    static member public (*) (a : FMatrix,scalar) = 
+    static member public ( * ) (a : FMatrix,scalar) = 
            float(scalar) * a
 
     static member public (/) (a : FMatrix, scalar) =

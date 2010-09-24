@@ -47,6 +47,16 @@ module FMatrix =
         let newGen = (fun (i,j) -> 1.0 / (float(i) + float(j) - 1.0))
         new FMatrix(m,n,newGen)
 
+    let upperTriangular m n v =
+        requires (m > 0 && n > 0) MATRIX_CUSTOMCREATION_BADDIMENSIONS
+        let newGen = (fun (i,j) -> if float(i) > float(j) then 0.0 else v)
+        new FMatrix(m,n,newGen)
+
+    let lowerTriangular m n v =
+        requires (m > 0 && n > 0) MATRIX_CUSTOMCREATION_BADDIMENSIONS
+        let newGen = (fun (i,j) -> if float(i) < float(j) then 0.0 else v)
+        new FMatrix(m,n,newGen)
+
     let sign (i,j,v) = if i + j % 2 = 0 then v else v * -1
 
 //    let hankel rows columns elements =
@@ -254,14 +264,35 @@ module FMatrix =
         let b4 = getPaddedSlice(Some(i+1),None,Some(j + 1),None)
         b1.ConcatHorizontal(b2).ConcatVertical(b3.ConcatHorizontal(b4))
 
+    let rec StrassenProduct (A : FMatrix, B: FMatrix) =
+        requires (A.IsSquare && A.Dimension = B.Dimension && A.RowCount % 2 = 0)
+                 FMATRIX_STRASSENPRODUCT_NOTSQUARE
+        if (A.RowCount <= 20) then
+            A * B
+        else
+            
+            let size = A.RowCount
+            let a, b = A.[ .. size / 2, .. size / 2], A.[.. size / 2, size / 2 + 1 ..]
+            let c, d = A.[ size / 2 + 1 .. , .. size / 2 ], A.[ size / 2 + 1 .., size / 2 + 1 ..]
+            let e, f = B.[ .. size / 2, .. size / 2], B.[.. size / 2, size / 2 + 1 ..]
+            let g, h = B.[ size / 2 + 1 .. , .. size / 2 ], B.[ size / 2 + 1 .., size / 2 + 1 ..]
+
+            let r = a * e + b * g//(StrassenProduct(a,e)) + StrassenProduct(b,g)
+            let s = a * f + b * h//(StrassenProduct(a,f)) + StrassenProduct(b,h)
+            let t = c * e + d * g//(StrassenProduct(c,e)) + StrassenProduct(d,g)
+            let u = c * f + d * h//(StrassenProduct(c,f)) + StrassenProduct(d,h)
+
+            (a.ConcatHorizontal(s)).ConcatVertical(t.ConcatHorizontal(u))
+            
+
     let determinant (m : FMatrix) =
         //TODO: This is the determinant via Minors, it is too much belated and must be replaced
-        //       with a method using PSeq and n-permutation generator usin PLINQ.
+        //with a method using PSeq and n-permutation generator usin PLINQ.
         requires (m.IsSquare) MATRIX_DETERMINANT_NOTSQUARE
         let sign (i,j) = if (((i + j) % 2) = 0) then 1.0 else -1.0
         let rec det n (a : FMatrix) =
             match n with
-            | 0 -> 1.0
+            | 0 | 1 -> 1.0
             | 2 -> (m.[1,1] * m.[2,2]) - (m.[1,2] * m.[2,1])
             | 3 -> (m.[1,1] * m.[2,2] * m.[3,3]) + (m.[1,2] * m.[2,3] * m.[3,1]) + (m.[1,3] * m.[2,1] * m.[3,2]) -
                    (m.[1,3] * m.[2,2] * m.[3,1]) - (m.[1,1] * m.[2,3] * m.[3,2]) - (m.[1,2] * m.[2,1] * m.[3,3])
