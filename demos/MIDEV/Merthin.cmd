@@ -1,0 +1,1 @@
+fsi.exe --nologo --optimize+ --tailcalls+  --use:midev.fsx --debug-

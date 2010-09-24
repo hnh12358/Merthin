@@ -1,1 +1,1 @@
-fsi.exe --nologo --optimize+ --tailcalls+  --use:startup.fsx --debug+
+fsi.exe --nologo --optimize+ --tailcalls+  --use:mi.fsx --debug-
