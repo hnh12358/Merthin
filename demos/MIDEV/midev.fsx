@@ -14,6 +14,7 @@ open Merthin.Extensions
 open Merthin.Interactive
 open Merthin.Math.Algebra.Matrix
 open Merthin.Math.Algebra.Matrix.FMatrix
+open Merthin.Math.Algebra.Matrix.Operators
 
 Console.Title <- "Merthin Interactive"
 Console.BackgroundColor <- ConsoleColor.DarkBlue
