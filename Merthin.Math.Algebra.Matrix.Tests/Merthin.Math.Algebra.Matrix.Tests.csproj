@@ -60,6 +60,10 @@
       <Project>{9A8D60C0-722A-4556-A777-E31DDD53FDA8}</Project>
       <Name>Merthin.FSharp</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Merthin.Interactive\Merthin.Interactive.fsproj">
+      <Project>{A9ACD6BA-C95E-47EF-B853-E979CF3F46FC}</Project>
+      <Name>Merthin.Interactive</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Merthin.Math.Algebra.Matrix\Merthin.Math.Algebra.Matrix.fsproj">
       <Project>{E852C82D-5E98-40C6-BE5C-0C678BC33370}</Project>
       <Name>Merthin.Math.Algebra.Matrix</Name>

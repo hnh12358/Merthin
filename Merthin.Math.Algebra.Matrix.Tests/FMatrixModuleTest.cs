@@ -278,6 +278,17 @@ namespace Merthin.Math.Algebra.Matrix.Tests
             Assert.AreEqual(expected, actual);
         }
 
+        [Test]
+        public void StrassenProduct_Size128_Correct()
+        {
+            var n = 128;
+            var A = FMatrixModule.hankelOfN(n, n);
+            var B = FMatrixModule.hankelOfNWithOffset(50, n, n);
+            var actual = Interactive.ToConsoleStringNullables(FMatrixModule.StrassenProduct(A, B), n, n, null, "", '0');
+            var expected = Interactive.ToConsoleStringNullables(A * B, n, n, null, "", '0');
+            Assert.AreEqual(expected, actual);
+        }
+
         #endregion
 
     }

@@ -30,7 +30,7 @@ module FMatrix =
         else
             new FMatrix(m,m, fun (i,j) -> if i = j then 1.0 else 0.0)
 
-    let diagonal (m,v) =
+    let diagonal m v =
         requires (m > 0) MATRIX_CUSTOMCREATION_BADDIMENSIONS
         new FMatrix(m,m, fun (i,j) -> if i = j then v else 0.0)
 
@@ -264,25 +264,34 @@ module FMatrix =
         let b4 = getPaddedSlice(Some(i+1),None,Some(j + 1),None)
         b1.ConcatHorizontal(b2).ConcatVertical(b3.ConcatHorizontal(b4))
 
-    let rec StrassenProduct (A : FMatrix, B: FMatrix) =
+    let rec StrassenProduct (A : FMatrix) (B: FMatrix) =
+        let (@*) a b = StrassenProduct a b
         requires (A.IsSquare && A.Dimension = B.Dimension && A.RowCount % 2 = 0)
                  FMATRIX_STRASSENPRODUCT_NOTSQUARE
         if (A.RowCount <= 20) then
             A * B
         else
-            
             let size = A.RowCount
             let a, b = A.[ .. size / 2, .. size / 2], A.[.. size / 2, size / 2 + 1 ..]
             let c, d = A.[ size / 2 + 1 .. , .. size / 2 ], A.[ size / 2 + 1 .., size / 2 + 1 ..]
             let e, f = B.[ .. size / 2, .. size / 2], B.[.. size / 2, size / 2 + 1 ..]
             let g, h = B.[ size / 2 + 1 .. , .. size / 2 ], B.[ size / 2 + 1 .., size / 2 + 1 ..]
 
-            let r = a * e + b * g//(StrassenProduct(a,e)) + StrassenProduct(b,g)
-            let s = a * f + b * h//(StrassenProduct(a,f)) + StrassenProduct(b,h)
-            let t = c * e + d * g//(StrassenProduct(c,e)) + StrassenProduct(d,g)
-            let u = c * f + d * h//(StrassenProduct(c,f)) + StrassenProduct(d,h)
+            let AF, AH, AE = (a @* f),(a @* h),(a @* e)
+            let BG, BH = (b @* g), (b @* h) 
+            let CE, CF = (c @* e),(c @* f)
+            let DE, DG, DH = (d @* e), (d @* g), (d @* h)
 
-            (a.ConcatHorizontal(s)).ConcatVertical(t.ConcatHorizontal(u))
+            let P1, P2, P3, P4 = AF - AH, AH + BH, CE + DE, DG - DE
+            let P5, P6 = AE + AH + DE + DH, BG + BH - DG - DH
+            let P7 = AE + AF - CE - CF
+
+            let r = P5 + P4 - P2 + P6
+            let s = P1 + P2
+            let t = P3 + P4
+            let u = P5 + P1 - P3 - P7
+
+            (r.ConcatHorizontal(s)).ConcatVertical(t.ConcatHorizontal(u))
             
 
     let determinant (m : FMatrix) =
