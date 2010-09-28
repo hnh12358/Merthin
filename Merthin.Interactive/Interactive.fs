@@ -10,12 +10,6 @@ open Merthin.Extensions
 open Merthin.Math.Algebra.Matrix
 
 module Interactive =
-
-    let (@|) (a: FMatrix) (b : FMatrix) = 
-        a.ConcatVertical(b)
-
-    let (@-) (a: FMatrix) (b : FMatrix) = 
-        a.ConcatHorizontal(b)
     
     let ToConsoleStringOptions (m : FMatrix,rowCount,columnCount,format : IFormatProvider,prefix,padChar : Char) =
         let adaptData data maxValid = match data with
