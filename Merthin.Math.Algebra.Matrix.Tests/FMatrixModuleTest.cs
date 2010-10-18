@@ -245,51 +245,158 @@ namespace Merthin.Math.Algebra.Matrix.Tests
 
         #endregion
 
-        #region Strassen Product
+        #region Strassen Multiplication
 
-        [Test]
-        public void StrassenProduct_Size10_Correct()
+        private static void AssertStrassenMultiplication(int n)
         {
-            var A = FMatrixModule.hankelOfN(10, 10);
-            var B = FMatrixModule.hankelOfNWithOffset(50, 10, 10);
-            var actual = FMatrixModule.StrassenProduct(A, B);
-            var expected = A * B;
+            var a = FMatrixModule.hankelOfN(n, n);
+            var b = FMatrixModule.hankelOfNWithOffset(2, n, n);
+            var actual = FMatrixModule.StrassenMultiplication(a, b).ToString(n, n, null, "", '0');
+            var expected = (a * b).ToString(n, n, null, "", '0');
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
-        public void StrassenProduct_Size16_Correct()
+        private static void AssertStrassenMultiplication(int n, int crossPoint)
         {
-            var A = FMatrixModule.hankelOfN(16, 16);
-            var B = FMatrixModule.hankelOfNWithOffset(50, 16, 16);
-            var actual = FMatrixModule.StrassenProduct(A, B);
-            var expected = A * B;
+            var a = FMatrixModule.hankelOfN(n, n);
+            var b = FMatrixModule.hankelOfNWithOffset(2, n, n);
+            var actual = FMatrixModule.StrassenMultiplication_ForAnySize(a, b, crossPoint).ToString(n, n, null, "", '0');
+            var expected = (a * b).ToString(n, n, null, "", '0');
             Assert.AreEqual(expected, actual);
         }
 
+        #region Strassen Multiplication - Power of Two - No Cross Point
 
         [Test]
-        public void StrassenProduct_Size32_Correct()
+        [Category("Strassen Multiplication - Power of Two - No Cross Point")]
+        public void StrassenMultiplication_Size16_CrossPoint0_Correct()
         {
-            var A = FMatrixModule.hankelOfN(32, 32);
-            var B = FMatrixModule.hankelOfNWithOffset(50, 32, 32);
-            var actual = Interactive.ToConsoleStringNullables(FMatrixModule.StrassenProduct(A, B),32,32,null,"",'0');
-            var expected = Interactive.ToConsoleStringNullables(A * B,32,32,null,"",'0');
-            Assert.AreEqual(expected, actual);
+            AssertStrassenMultiplication(16, 0);
         }
 
         [Test]
-        public void StrassenProduct_Size128_Correct()
+        [Category("Strassen Multiplication - Power of Two - No Cross Point")]
+        public void StrassenMultiplication_Size32_CrossPoint0_Correct()
         {
-            var n = 128;
-            var A = FMatrixModule.hankelOfN(n, n);
-            var B = FMatrixModule.hankelOfNWithOffset(50, n, n);
-            var actual = Interactive.ToConsoleStringNullables(FMatrixModule.StrassenProduct(A, B), n, n, null, "", '0');
-            var expected = Interactive.ToConsoleStringNullables(A * B, n, n, null, "", '0');
-            Assert.AreEqual(expected, actual);
+            AssertStrassenMultiplication(32, 0);
         }
 
         #endregion
 
+        #region Strassen Multiplication - No Power Of Two - Cross Point
+
+        [Test]
+        [Category("Strassen Multiplication - No Power Of Two - No Cross Point")]
+        public void StrassenMultiplication_Size3_CrossPoint0_Correct()
+        {
+            AssertStrassenMultiplication(3, 0);
+        }
+
+        [Test]
+        [Category("Strassen Multiplication - No Power Of Two - No Cross Point")]
+        public void StrassenMultiplication_Size15_CrossPoint0_Correct()
+        {
+            AssertStrassenMultiplication(15, 0);
+        }
+
+        [Test]
+        [Category("Strassen Multiplication - No Power Of Two - No Cross Point")]
+        public void StrassenMultiplication_Size27_CrossPoint0_Correct()
+        {
+            AssertStrassenMultiplication(27, 0);
+        }
+
+        [Test]
+        [Category("Strassen Multiplication - No Power Of Two - No Cross Point")]
+        public void StrassenMultiplication_Size55_CrossPoint0_Correct()
+        {
+            AssertStrassenMultiplication(55, 0);
+        }
+
+        #endregion
+
+        #region Strassen Multiplication - Power Of Two - Cross Point
+
+        [Test]
+        [Category("Strassen Multiplication - Power Of Two - Cross Point")]
+        public void StrassenMultiplication_Size8_CrossPoint4_Correct()
+        {
+            AssertStrassenMultiplication(8, 4);
+        }
+
+        [Test]
+        [Category("Strassen Multiplication - Power Of Two - Cross Point")]
+        public void StrassenMultiplication_Size16_CrossPoint8_Correct()
+        {
+            AssertStrassenMultiplication(16, 8);
+        }
+
+        [Test]
+        [Category("Strassen Multiplication - Power Of Two - Cross Point")]
+        public void StrassenMultiplication_Size32_CrossPoint16_Correct()
+        {
+            AssertStrassenMultiplication(32, 16);
+        }
+
+        [Test]
+        [Category("Strassen Multiplication - Power Of Two - Cross Point")]
+        public void StrassenMultiplication_Size64_CrossPoint32_Correct()
+        {
+            AssertStrassenMultiplication(64, 32);
+        }
+
+        #endregion
+
+        #region Strassen Multiplication - No Power Of Two - Cross Point
+
+        [Test]
+        [Category("Strassen Multiplication - No Power Of Two - Cross Point")]
+        public void StrassenMultiplication_Size3_CrossPoint2_Correct()
+        {
+            AssertStrassenMultiplication(3, 2);
+        }
+
+        [Test]
+        [Category("Strassen Multiplication - No Power Of Two - Cross Point")]
+        public void StrassenMultiplication_Size15_CrossPoint8_Correct()
+        {
+            AssertStrassenMultiplication(15, 8);
+        }
+
+        [Test]
+        [Category("Strassen Multiplication - No Power Of Two - Cross Point")]
+        public void StrassenMultiplication_Size27_CrossPoint16_Correct()
+        {
+            AssertStrassenMultiplication(27, 16);
+        }
+
+        [Test]
+        [Category("Strassen Multiplication - No Power Of Two - Cross Point")]
+        public void StrassenMultiplication_Size55_CrossPoint32_Correct()
+        {
+            AssertStrassenMultiplication(55, 32);
+        }
+
+        #endregion
+
+        #region Strassen Multiplication - Automatic Cross Point
+
+        [Test]
+        [Category("Strassen Multiplication - Automatic Cross Point")]
+        public void StrassenMultiplication_Size19_Correct()
+        {
+            AssertStrassenMultiplication(19);
+        }
+
+        [Test]
+        [Category("Strassen Multiplication - Automatic Cross Point")]
+        public void StrassenMultiplication_Size32_Correct()
+        {
+            AssertStrassenMultiplication(32);
+        }
+
+        #endregion
+
+        #endregion
     }
 }

@@ -12,4 +12,4 @@ module Operators =
             a.ConcatHorizontal(b)
 
         let (@*) (a: FMatrix) (b : FMatrix) = 
-            FMatrix.StrassenProduct a b
+            FMatrix.strassenMultiplication a b

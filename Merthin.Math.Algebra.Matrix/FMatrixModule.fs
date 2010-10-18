@@ -1,6 +1,7 @@
 ﻿namespace Merthin.Math.Algebra.Matrix
 open System
 open System.IO
+open System.Diagnostics
 open Microsoft.FSharp.Collections
 open Merthin.FSharp
 
@@ -83,12 +84,10 @@ module FMatrix =
         new FMatrix(rows,columns,gen)
 
     let subMatrix (rowStart,rowEnd,columnStart,columnEnd) (m : FMatrix) =
-        m.get_GetSlice(NullableToOption(rowStart),NullableToOption(rowEnd), 
-                       NullableToOption(columnStart), NullableToOption(columnEnd),false)
+        m.get_GetSlice(NetOptionToOption(rowStart),NetOptionToOption(rowEnd),NetOptionToOption(columnStart),NetOptionToOption(columnEnd),false)
 
     let subMatrixOrEmpty (rowStart,rowEnd,columnStart,columnEnd) (m : FMatrix) =
-        m.get_GetSlice(NullableToOption(rowStart),NullableToOption(rowEnd), 
-                       NullableToOption(columnStart), NullableToOption(columnEnd),true)
+          m.get_GetSlice(NetOptionToOption(rowStart),NetOptionToOption(rowEnd),NetOptionToOption(columnStart),NetOptionToOption(columnEnd),true)
 
     let private createGen sparseValue rows =
         
@@ -230,7 +229,7 @@ module FMatrix =
             let spro = (fun (i, j : int) (m : FMatrix) -> m.Items |> PSeq.reduce (+))
             proji spro (a.RowCount,1) a  
 
-    let wavelet (order,m : FMatrix) =
+    let wavelet (order, m : FMatrix) =
         requires (m.IsRowVector) "Just row vectors."
         requires (Math.Log(float(m.ColumnCount),2.0) >= float(order)) "The order isn't valid."
         let waveProjection f m = proj (fun sm -> (f (sm.[1,1]) (sm.[1,2])) / 2.0)  (1,2) m
@@ -264,36 +263,6 @@ module FMatrix =
         let b4 = getPaddedSlice(Some(i+1),None,Some(j + 1),None)
         b1.ConcatHorizontal(b2).ConcatVertical(b3.ConcatHorizontal(b4))
 
-    let rec StrassenProduct (A : FMatrix) (B: FMatrix) =
-        let (@*) a b = StrassenProduct a b
-        requires (A.IsSquare && A.Dimension = B.Dimension && A.RowCount % 2 = 0)
-                 FMATRIX_STRASSENPRODUCT_NOTSQUARE
-        if (A.RowCount <= 20) then
-            A * B
-        else
-            let size = A.RowCount
-            let a, b = A.[ .. size / 2, .. size / 2], A.[.. size / 2, size / 2 + 1 ..]
-            let c, d = A.[ size / 2 + 1 .. , .. size / 2 ], A.[ size / 2 + 1 .., size / 2 + 1 ..]
-            let e, f = B.[ .. size / 2, .. size / 2], B.[.. size / 2, size / 2 + 1 ..]
-            let g, h = B.[ size / 2 + 1 .. , .. size / 2 ], B.[ size / 2 + 1 .., size / 2 + 1 ..]
-
-            let AF, AH, AE = (a @* f),(a @* h),(a @* e)
-            let BG, BH = (b @* g), (b @* h) 
-            let CE, CF = (c @* e),(c @* f)
-            let DE, DG, DH = (d @* e), (d @* g), (d @* h)
-
-            let P1, P2, P3, P4 = AF - AH, AH + BH, CE + DE, DG - DE
-            let P5, P6 = AE + AH + DE + DH, BG + BH - DG - DH
-            let P7 = AE + AF - CE - CF
-
-            let r = P5 + P4 - P2 + P6
-            let s = P1 + P2
-            let t = P3 + P4
-            let u = P5 + P1 - P3 - P7
-
-            (r.ConcatHorizontal(s)).ConcatVertical(t.ConcatHorizontal(u))
-            
-
     let determinant (m : FMatrix) =
         //TODO: This is the determinant via Minors, it is too much belated and must be replaced
         //with a method using PSeq and n-permutation generator usin PLINQ.
@@ -308,3 +277,62 @@ module FMatrix =
             | x -> seq {1 .. x} |> PSeq.map (fun j -> (sign (1,j)) * m.[1,j] * (det (x - 1) (minor (1,j) a)))
                    |> PSeq.sum
         det m.RowCount m                             
+
+    [<CompiledName("StrassenMultiplication_ForSizePowerOfTwo")>]  
+    let rec internal strassenMultiplication_ForSizePowerOfTwo  (A : FMatrix) (B: FMatrix) (crossPoint) =
+
+        requires ((A.IsSquare && A.Dimension = B.Dimension && isPowerOf (float A.RowCount) 2.0))
+                 FMATRIX_STRASSENPRODUCT_BADDIMENSIONS_NOPOWEROFTWO
+
+        let (@*) a b =  strassenMultiplication_ForSizePowerOfTwo a b crossPoint
+
+        match A.RowCount with
+        | 1 -> A * B
+        | size when (size <= crossPoint) -> A * B
+        | size -> let a, b = A.[ .. size / 2, .. size / 2], A.[.. size / 2, size / 2 + 1 ..]
+                  let c, d = A.[ size / 2 + 1 .. , .. size / 2 ], A.[ size / 2 + 1 .., size / 2 + 1 ..]
+                  let e, f = B.[ .. size / 2, .. size / 2], B.[.. size / 2, size / 2 + 1 ..]
+                  let g, h = B.[ size / 2 + 1 .. , .. size / 2 ], B.[ size / 2 + 1 .., size / 2 + 1 ..]
+
+                  let AF, AH, AE = (a @* f), (a @* h), (a @* e)
+                  let BG, BH = (b @* g), (b @* h) 
+                  let CE, CF = (c @* e), (c @* f)
+                  let DE, DG, DH = (d @* e), (d @* g), (d @* h)
+
+                  let P1, P2, P3, P4 = AF - AH, AH + BH, CE + DE, DG - DE
+                  let P5, P6 = AE + AH + DE + DH, BG + BH - DG - DH
+                  let P7 = AE + AF - CE - CF
+                  let r,s,t,u = P5 + P4 - P2 + P6, P1 + P2, P3 + P4, P5 + P1 - P3 - P7
+                  ((r.ConcatHorizontal(s)).ConcatVertical(t.ConcatHorizontal(u)))
+    
+    [<CompiledName("StrassenMultiplication_ForAnySize")>]     
+    let internal strassenMultiplication_ForAnySize (A : FMatrix) (B: FMatrix) (crossPoint) =
+        requires (A.IsSquare && A.Dimension = B.Dimension)  FMATRIX_STRASSENPRODUCT_BADDIMENSIONS
+        let enclose (a : FMatrix) padding = a.ConcatHorizontal(zero a.RowCount padding).ConcatVertical(zero padding (a.ColumnCount + padding))
+       
+        let A1, B1, padding =  let padding = int (paddingForPowerOf (float A.RowCount) 2.0)
+                               if padding > 0 then 
+                                  (enclose A padding, enclose B padding,padding) 
+                               else 
+                                  (A,B,0)
+        let result = strassenMultiplication_ForSizePowerOfTwo A1 B1 crossPoint
+        if padding > 0 then
+           result.[..  A.RowCount, ..  A.RowCount]
+        else
+           result
+
+    [<CompiledName("StrassenMultiplication")>]        
+    let strassenMultiplication (A : FMatrix) (B: FMatrix) =
+        requires (A.IsSquare && A.Dimension = B.Dimension)  FMATRIX_STRASSENPRODUCT_BADDIMENSIONS
+        let enclose (a : FMatrix) padding = a.ConcatHorizontal(zero a.RowCount padding).ConcatVertical(zero padding (a.ColumnCount + padding))
+        let A1, B1, padding = let padding = int (paddingForPowerOf (float A.RowCount) 2.0)
+                              if padding > 0 then 
+                                 (enclose A padding, enclose B padding,padding) 
+                              else 
+                                 (A,B,0)
+        if padding > 0 then
+           //There is bug with the use of cross point while padding matrixs with size not a power of two.
+           let result = strassenMultiplication_ForSizePowerOfTwo A1 B1 0
+           result.[..  A.RowCount, ..  A.RowCount]
+        else
+           strassenMultiplication_ForSizePowerOfTwo A1 B1 (A.RowCount / 2)

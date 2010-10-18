@@ -1,12 +1,16 @@
 ﻿namespace Merthin.Math.Algebra.Matrix
+
 open System
+open System.Diagnostics
+
 open Microsoft.FSharp.Collections
+
 open Merthin.FSharp
 
 type FMatrix(rows,columns,gen) =  
     
     do requires (rows >= 0 && columns >= 0)  MATRIX_CREATION_BADDIMENSIONS    
-
+   
     new (rows, columns, gen :  Func<Int32,Int32,Double>) =
         requires (gen <> null) MATRIX_CREATION_NULLDELEGATE
         let newGen = (fun (i,j) -> gen.Invoke(i,j))
@@ -122,7 +126,7 @@ type FMatrix(rows,columns,gen) =
                     | None, None -> (1, count,count)
 
                 let (r1,r2,deltar), (c1,c2,deltac) = (adaptSlice rowStart rowEnd rows),
-                                                     (adaptSlice  columnStart columnEnd columns)
+                                                     (adaptSlice columnStart columnEnd columns)
                 if areValidSlices (r1,r2,c1,c2) then
                    let newGen = fun (i,j) -> this.[r1 + i - 1, c1 + j - 1]              
                    new FMatrix(deltar,deltac,newGen)
@@ -266,7 +270,6 @@ type FMatrix(rows,columns,gen) =
                    |> PSeq.forall((=) true)
         | _ -> false
 
-
     override this.GetHashCode() =
              this.Items
              |> PSeq.fold (fun a b -> let c = b.GetHashCode() in ((a <<< 5) + a) ^^^ c) 
@@ -275,3 +278,41 @@ type FMatrix(rows,columns,gen) =
     member public this.GetFastHashCode() =
            let a = rows.GetHashCode() &&& columns.GetHashCode() 
            ((a <<< 5) + a) ^^^ ((gen :> obj).GetHashCode())
+
+
+    member public this.ToString(rowCount,columnCount,format : IFormatProvider,prefix, padChar : Char) = 
+           let adapt data maxValid = match data with
+                                     | NetOption.Some(value) when value <= maxValid -> value 
+                                     | _ -> maxValid
+        
+           let maxRC, maxCC = adapt rowCount this.RowCount,adapt columnCount this.ColumnCount
+
+           let columnEnd = if maxCC < this.ColumnCount then " .\n" else "\n"
+           let startCell, lastCell = (fun next -> (fun pad -> next(pad))), (fun pad -> String.Empty)
+           
+           let stringFold i (command,large) (current : float) = 
+               let newCommand = 
+                   if (i + 1) % Math.Min(this.ColumnCount,maxCC) = 1  then
+                      (fun next -> (fun pad -> current.ToString(format).PadLeft(pad,padChar) + next(pad)))
+                   elif (i + 1) % Math.Min(this.ColumnCount,maxCC) = 0 then
+                      (fun next -> (fun pad -> " " + current.ToString(format).PadLeft(pad,padChar) + columnEnd + next(pad)))
+                   else 
+                      (fun next -> (fun pad -> " " + current.ToString(format).PadLeft(pad,padChar) + next(pad)))
+               (fun next -> command(newCommand(next))), Math.Max(current.ToString(format).Length,large)
+
+           let items = this.[.. maxRC,.. maxCC].Items        
+           let continuation, length =  Seq.foldi stringFold (startCell,0) items
+        
+           match maxRC,this.RowCount with
+           | _ when (maxRC < this.RowCount) && maxCC < this.ColumnCount ->
+               prefix + (continuation lastCell (length)) + ".".PadLeft(length) + String.replicate (maxCC - 1) (".".PadLeft(length + 1,' ')) + " ."
+           | _ when maxRC < this.RowCount -> 
+               prefix + (continuation lastCell (length)) + ".".PadLeft(length) + String.replicate (maxCC - 1) (".".PadLeft(length + 1,' '))
+           | _ -> 
+               prefix + String.removeFromEnd (continuation lastCell (length)) 0
+    
+   
+    override this.ToString() =
+             let textRepresentation = lazy(Debug.WriteLine("Hello Malcom");
+                                           this.ToString(NetOption.Some(Math.Min(this.RowCount,50)),NetOption.Some(Math.Min(this.ColumnCount,50)),null,"",'0'))
+             textRepresentation.Force()        

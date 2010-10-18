@@ -38,6 +38,7 @@
     </PostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="NetOption.fs" />
     <Compile Include="DesignPatterns.Singleton.fs" />
     <Compile Include="MerthinApplication.fs" />
     <Compile Include="UtilsModule.fs" />

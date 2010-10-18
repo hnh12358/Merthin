@@ -33,27 +33,6 @@
     <WarningLevel>3</WarningLevel>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath32)\..\Microsoft F#\v4.0\Microsoft.FSharp.Targets" />
-  <ItemGroup>
-    <Compile Include="StringsResources.fs" />
-    <Compile Include="FMatrix.fs" />
-    <Compile Include="FMatrixModule.fs" />
-    <Compile Include="Operators.fs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="FSharp.PowerPack.Parallel.Seq, Version=1.9.9.9, Culture=neutral, PublicKeyToken=a19089b1c74d0809" />
-    <Reference Include="mscorlib" />
-    <Reference Include="FSharp.Core" />
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Numerics" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Merthin.FSharp\Merthin.FSharp.fsproj">
-      <Name>Merthin.FSharp</Name>
-      <Project>{9a8d60c0-722a-4556-a777-e31ddd53fda8}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-  </ItemGroup>
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
@@ -66,6 +45,27 @@
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="UtilsModule.fs" />
+    <Compile Include="StringsResources.fs" />
+    <Compile Include="FMatrix.fs" />
+    <Compile Include="FMatrixModule.fs" />
+    <Compile Include="Operators.fs" />
+    <Compile Include="AssemblyInfo.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="FSharp.PowerPack.Parallel.Seq, Version=1.9.9.9, Culture=neutral, PublicKeyToken=a19089b1c74d0809" />
+    <Reference Include="mscorlib" />
+    <Reference Include="FSharp.Core" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <ProjectReference Include="..\Merthin.FSharp\Merthin.FSharp.fsproj">
+      <Name>Merthin.FSharp</Name>
+      <Project>{9a8d60c0-722a-4556-a777-e31ddd53fda8}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+  </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
 	     Other similar extension points exist, see Microsoft.Common.targets.
 	<Target Name="BeforeBuild">
