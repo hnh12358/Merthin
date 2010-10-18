@@ -40,11 +40,11 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="System.String.fs" />
     <Compile Include="System.Drawing.Color.fs" />
     <Compile Include="System.Drawing.Bitmap.fs" />
     <Compile Include="System.Reflection.Type.fs" />
-    <Compile Include="System.Reflection.Assembly.fs" />
-    <Compile Include="System.String.fs" />
+    <Compile Include="System.Reflection.MemberInfo.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Merthin.FSharp\Merthin.FSharp.fsproj">

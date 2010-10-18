@@ -13,6 +13,7 @@ namespace Merthin.FSharp.Tests
         #region MethodIdentifier
 
         [Test]
+        [Category("Object to FSharp Code")]
         public void MethodIdentifier_CombinedOperators_Correct()
         {
             var method = typeof(MethodContainer<>).GetMethods(BindingFlags.Static | BindingFlags.Public)[0];
@@ -26,6 +27,7 @@ namespace Merthin.FSharp.Tests
         #region TypeIdentifier
 
         [Test]
+        [Category("Object to FSharp Code")]
         public void TypeIdentifier_GenericTypesClosed_Correct()
         {
             var nullableIntTypeCode = FSharpCodes.TypeIdentifier(typeof(Nullable<Int32>));
@@ -37,6 +39,7 @@ namespace Merthin.FSharp.Tests
         }
 
         [Test]
+        [Category("Object to FSharp Code")]
         public void TypeIdentifier_GenericTypesOpen_Correct()
         {
             var genericOpenType1 = FSharpCodes.TypeIdentifier(typeof(MethodContainer<>));
@@ -47,6 +50,7 @@ namespace Merthin.FSharp.Tests
         }
 
         [Test]
+        [Category("Object to FSharp Code")]
         public void TypeIdentifier_Tuples_Correct()
         {
             var tuple1Type = Tuple.Create(1).GetType();
@@ -83,6 +87,7 @@ namespace Merthin.FSharp.Tests
         }
 
         [Test]
+        [Category("Object to FSharp Code")]
         public void TypeIdentifier_PrimitiveDataTypes_Correct()
         {
             var pairs = new[]

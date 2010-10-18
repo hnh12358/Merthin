@@ -1,5 +1,6 @@
 ﻿namespace Merthin.FSharp
 open System
+open System.Text
 open System.Reflection
 open System.Runtime.CompilerServices
 
@@ -119,6 +120,6 @@ module FSharpCodes =
        let methodSignature (methodMember : MethodInfo) = 
            let methodIdentifier = methodIdentifier methodMember
            let parameters = methodMember.GetParameters()
-                            |> Array.fold (fun x acc -> String.Format("{0} -> ",typeIdentifier(acc.ParameterType)) + x) String.Empty
-           let signature = parameters + methodMember.ReturnType.Name
+                            |> Array.fold (fun (acc : StringBuilder) current -> acc.AppendFormat("{0} -> ",typeIdentifier(current.ParameterType)) ) (new StringBuilder())
+           let signature = parameters.ToString() + typeIdentifier(methodMember.ReturnType)
            String.Format("{0} : {1}",methodIdentifier,signature) 
