@@ -14,10 +14,8 @@ module Interactive =
     
     let credits() =
         "\nMerthin Interactive is a customization of the F# Interactive tool that load modules, data types and operators from " +
-        "the Merthin project allowing the experimentation over the F# repl console.\n" +
-        "\nThe Merthin project is written and maintained by:\n" +
-        "Horacio Nunez (hnh12358@gmail.com)\n" +
-        "\nYour feedback is welcome!\n"
+        "the Merthin project assemblies. Any opinion will be welcome at hnh12358@gmail.com.\n" +
+        "Horacio Nunez (hnh12358@gmail.com)\n"
         |> Console.WriteLine
 
     let functions() =
@@ -38,9 +36,7 @@ module Interactive =
                                yield methodMember
                 }
 
-
-        let aggrupedFuncs = [|Path.Combine(Environment.CurrentDirectory,@"Merthin.Math.Algebra.Matrix.dll");
-                              @"..\..\Merthin.Math.Algebra.Matrix\bin\Debug\Merthin.Math.Algebra.Matrix.dll"|]
+        let aggrupedFuncs = [|Path.Combine(Environment.CurrentDirectory, @"bin\Merthin.Math.Algebra.Matrix.dll")|]
                             |> retrieveStaticFunctions
                             |> Seq.groupBy (fun x -> x.DeclaringType)
 

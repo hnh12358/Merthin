@@ -5,66 +5,63 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{e852c82d-5e98-40c6-be5c-0c678bc33370}</ProjectGuid>
+    <ProjectGuid>{9a8d60c0-722a-4556-a777-e31ddd53fda8}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Merthin.Math.Algebra</RootNamespace>
-    <AssemblyName>Merthin.Math.Algebra.Matrix</AssemblyName>
+    <RootNamespace>Merthin.FSharp</RootNamespace>
+    <AssemblyName>Merthin.FSharp</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <Name>Merthin.Math.Algebra.Matrix</Name>
+    <Name>Merthin.FSharp</Name>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <Tailcalls>false</Tailcalls>
+    <Optimize>true</Optimize>
+    <Tailcalls>true</Tailcalls>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;--standalone</DefineConstants>
     <WarningLevel>3</WarningLevel>
-    <OtherFlags>
-    </OtherFlags>
+    <DocumentationFile>bin\Debug\Merthin.FSharp.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <Tailcalls>true</Tailcalls>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <OutputPath>..\..\demos\MI\bin</OutputPath>
+    <DefineConstants>TRACE;-doc</DefineConstants>
     <WarningLevel>3</WarningLevel>
+    <DocumentationFile>bin\Release\Merthin.FSharp.XML</DocumentationFile>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath32)\..\Microsoft F#\v4.0\Microsoft.FSharp.Targets" />
   <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup>
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="NetOption.fs" />
+    <Compile Include="DesignPatterns.Singleton.fs" />
+    <Compile Include="MerthinApplication.fs" />
     <Compile Include="UtilsModule.fs" />
-    <Compile Include="StringsResources.fs" />
-    <Compile Include="FMatrix.fs" />
-    <Compile Include="FMatrixModule.fs" />
+    <Compile Include="ArrayModule.fs" />
+    <Compile Include="ListModule.fs" />
+    <Compile Include="SeqModule.fs" />
+    <Compile Include="PSeqModule.fs" />
     <Compile Include="Operators.fs" />
-    <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="Applications.fs" />
+    <Compile Include="StringModule.fs" />
+    <Compile Include="Compatibility.DelegateExtensions.fs" />
+    <None Include="Compatibility.DelegateExtensions.CG.fsx" />
+    <Compile Include="FSharpCodes.fs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="FSharp.PowerPack.Parallel.Seq, Version=1.9.9.9, Culture=neutral, PublicKeyToken=a19089b1c74d0809" />
+    <Reference Include="FSharp.PowerPack.Parallel.Seq">
+      <HintPath>..\Merthin.Math.Algebra.Matrix\bin\Debug\FSharp.PowerPack.Parallel.Seq.dll</HintPath>
+    </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="FSharp.Core" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
-    <ProjectReference Include="..\Merthin.FSharp\Merthin.FSharp.fsproj">
-      <Name>Merthin.FSharp</Name>
-      <Project>{9a8d60c0-722a-4556-a777-e31ddd53fda8}</Project>
-      <Private>True</Private>
-    </ProjectReference>
   </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
 	     Other similar extension points exist, see Microsoft.Common.targets.

@@ -174,7 +174,7 @@ namespace Merthin.Math.Algebra.Matrix.Tests
         #region Determinant Tests
 
         [Test,MaxTime(1000)]
-        public void Determinant_Identity10_1()
+        public void Determinant_Identity10_Correct()
         {
 
             var source1 = FMatrixModule.identity(10);
@@ -184,27 +184,7 @@ namespace Merthin.Math.Algebra.Matrix.Tests
         }
 
         [Test, MaxTime(1000)]
-        public void Determinant_Identity3_1()
-        {
-
-            var source1 = FMatrixModule.identity(3);
-            var result1 = FMatrixModule.determinant(source1);
-
-            Assert.AreEqual(1, result1);
-        }
-
-        [Test, MaxTime(1000)]
-        public void Determinant_Identity4_1()
-        {
-
-            var source1 = FMatrixModule.identity(4);
-            var result1 = FMatrixModule.determinant(source1);
-
-            Assert.AreEqual(1, result1);
-        }
-
-        [Test, MaxTime(1000)]
-        public void Determinant_Identity20_1()
+        public void Determinant_Identity20_Correct()
         {
 
             var source1 = FMatrixModule.identity(50);
@@ -304,13 +284,6 @@ namespace Merthin.Math.Algebra.Matrix.Tests
         public void StrassenMultiplication_Size27_CrossPoint0_Correct()
         {
             AssertStrassenMultiplication(27, 0);
-        }
-
-        [Test]
-        [Category("Strassen Multiplication - No Power Of Two - No Cross Point")]
-        public void StrassenMultiplication_Size55_CrossPoint0_Correct()
-        {
-            AssertStrassenMultiplication(55, 0);
         }
 
         #endregion

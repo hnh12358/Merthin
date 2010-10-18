@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+<assembly><name>Merthin.Extensions</name></assembly>
+<members>
+<member name="">
+
+</member>
+<member name="T:Merthin.Extensions.SystemDrawingBitmap">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:Merthin.Extensions.SystemDrawingColor">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:Merthin.Extensions.SystemReflectionMemberInfo">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:Merthin.Extensions.SystemString">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:Merthin.Extensions.SystemType">
+
+</member>
+</members>
+</doc>

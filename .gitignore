@@ -29,4 +29,5 @@ _ReSharper*/
 [Tt]est[Rr]esult*
 
 *.testsettings
-demos/FMatrix*
+demos/MI/bin/
+demos/MIDEV/bin/

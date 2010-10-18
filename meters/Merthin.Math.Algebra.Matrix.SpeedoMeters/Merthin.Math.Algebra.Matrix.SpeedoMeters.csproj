@@ -5,12 +5,12 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{A46432C7-CB52-4C95-BC16-FC60B5200373}</ProjectGuid>
+    <ProjectGuid>{7A179199-317A-4244-83C6-83D9293A0AF6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Merthin.FSharp.Tests</RootNamespace>
-    <AssemblyName>Merthin.FSharp.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <RootNamespace>Merthin.Math.Algebra.Matrix.SpeedoMeters</RootNamespace>
+    <AssemblyName>Merthin.Math.Algebra.Matrix.SpeedoMeters</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -31,26 +31,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework">
-      <HintPath>..\..\..\..\Users\Horacio Nunez\bin\NUnit\bin\net-2.0\framework\nunit.framework.dll</HintPath>
+    <Reference Include="Speedometer.Framework">
+      <HintPath>..\..\Speedometer\Speedometer.Framework\bin\Debug\Speedometer.Framework.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FSharpCodesTest.cs" />
+    <Compile Include="MatrixMultiplicationMeters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Merthin.FSharp\Merthin.FSharp.fsproj">
-      <Project>{9A8D60C0-722A-4556-A777-E31DDD53FDA8}</Project>
-      <Name>Merthin.FSharp</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

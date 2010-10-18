@@ -5,31 +5,30 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{a9acd6ba-c95e-47ef-b853-e979cf3f46fc}</ProjectGuid>
+    <ProjectGuid>{2388f4bf-a931-40fb-8356-eaa5690745a9}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Merthin.Interactive</RootNamespace>
-    <AssemblyName>Merthin.Interactive</AssemblyName>
+    <RootNamespace>Methin.Math</RootNamespace>
+    <AssemblyName>Methin.Math.Algebra.Interpolation</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <Name>Merthin.Interactive</Name>
+    <Name>Methin.Math.Algebra.Interpolation</Name>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <Tailcalls>false</Tailcalls>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\demos\MIDEV\bin</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
-    <DocumentationFile>bin\Debug\Merthin.Interactive.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <Tailcalls>true</Tailcalls>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\demos\MI\bin</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
-    <DocumentationFile>bin\Release\Merthin.Interactive.XML</DocumentationFile>
+    <DocumentationFile>..\..\docs\Merthin.Math.Algebra.Interpolation.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
@@ -39,27 +38,17 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interactive.fs" />
+    <Compile Include="DoubleExpressionTrees.fs" />
+    <Compile Include="Interpolation.fs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Merthin.Extensions\Merthin.Extensions.fsproj">
-      <Name>Merthin.Extensions</Name>
-      <Project>{d514139b-a413-4a7c-acbd-41d2f801c610}</Project>
-      <Private>True</Private>
-    </ProjectReference>
     <ProjectReference Include="..\Merthin.FSharp\Merthin.FSharp.fsproj">
       <Name>Merthin.FSharp</Name>
       <Project>{9a8d60c0-722a-4556-a777-e31ddd53fda8}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\Merthin.Math.Algebra.Matrix\Merthin.Math.Algebra.Matrix.fsproj">
-      <Name>Merthin.Math.Algebra.Matrix</Name>
-      <Project>{e852c82d-5e98-40c6-be5c-0c678bc33370}</Project>
-      <Private>True</Private>
-    </ProjectReference>
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath32)\FSharp\1.0\Microsoft.FSharp.Targets" Condition="!Exists('$(MSBuildBinPath)\Microsoft.Build.Tasks.v4.0.dll')" />
-  <Import Project="$(MSBuildExtensionsPath32)\..\Microsoft F#\v4.0\Microsoft.FSharp.Targets" Condition=" Exists('$(MSBuildBinPath)\Microsoft.Build.Tasks.v4.0.dll')" />
+  <Import Project="$(MSBuildExtensionsPath32)\..\Microsoft F#\v4.0\Microsoft.FSharp.Targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
 	     Other similar extension points exist, see Microsoft.Common.targets.
 	<Target Name="BeforeBuild">

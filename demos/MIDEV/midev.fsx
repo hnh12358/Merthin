@@ -1,9 +1,8 @@
-(* JUST FOR DEVELOPEPMENT *)
-#r "FSharp.PowerPack.Parallel.Seq.dll"
-#r @"..\..\Merthin.Math.Algebra.Matrix\bin\Debug\Merthin.FSharp.dll"
-#r @"..\..\Merthin.Extensions\bin\Debug\Merthin.Extensions.dll"
-#r @"..\..\Merthin.Math.Algebra.Matrix\bin\Debug\Merthin.Math.Algebra.Matrix.dll"
-#r @"..\..\Merthin.Interactive\bin\Debug\Merthin.Interactive.dll"
+#r @"bin\FSharp.PowerPack.Parallel.Seq.dll"
+#r @"bin\Merthin.FSharp.dll"
+#r @"bin\Merthin.Extensions.dll"
+#r @"bin\Merthin.Math.Algebra.Matrix.dll"
+#r @"bin\Merthin.Interactive.dll"
 
 open System
 
@@ -21,7 +20,7 @@ Console.BackgroundColor <- ConsoleColor.DarkBlue
 Console.ForegroundColor <- ConsoleColor.White
 
 fsi.AddPrinter (fun (m : FMatrix) -> 
-                    ToConsoleStringOptions(m,Some(fsi.PrintLength),Some(fsi.PrintWidth),fsi.FormatProvider, "\n",' '))
+                     m.ToString(NetOption.Some(fsi.PrintLength),NetOption.Some(fsi.PrintWidth),fsi.FormatProvider, "\n",' '))
 
 #time "on"
 
