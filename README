@@ -1,9 +1,1 @@
-Merthin is a set of F# libraries that was initially written as part of the process of learning the language.
-On it you will find a set of compatibility and extensions methods that you can add to your toolbox and
-reasonable amount of code for the work with functional matrix (that is a matrix that is represented by functions
-instead of arrays) and expressions trees.You are invited to play with it, and I will appreciate your feedback.
-
-If you just want to test the project and the functional matrix approach execute Merthin.cmd
-file that you cand find at demos/MI.
-
-Any opinions are welcome to hora at horatio dot info
+Original Paper: http://goo.gl/5rrpvU
